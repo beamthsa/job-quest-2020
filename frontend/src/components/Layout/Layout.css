@@ -15,16 +15,13 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: auto !important;
 }
 
 .ant-layout {
     background: transparent;
-}
-
-.ant-layout-content {
-    min-height: 100vh;
-    max-height: 100vh;
-    overflow: auto;
 }
 
 .ant-btn {
@@ -133,4 +130,8 @@ body {
 
 .ant-input-number-handler-wrap {
     display: none;
+}
+
+.ant-back-top .anticon {
+    font-size: 36px;
 }
