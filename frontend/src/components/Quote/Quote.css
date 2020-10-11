@@ -1,0 +1,12 @@
+.quote {
+    text-align: center;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+@media screen and (min-width: 991px) {
+    .quote {
+        margin-top: 4rem !important;
+        margin-bottom: 4rem !important;
+    }
+}

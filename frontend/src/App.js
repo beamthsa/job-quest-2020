@@ -1,52 +1,86 @@
-import React, {useState} from 'react';
-import {Button, Typography} from 'antd';
+import React, {useState, useEffect} from 'react';
+import {Typography, Button, Space, notification} from 'antd';
+import {SyncOutlined} from '@ant-design/icons'
+import map from 'lodash/map';
+import isEmpty from 'lodash/isEmpty';
 
 import Container from './components/Container'
 import Layout from './components/Layout';
-import ApiHelpers from './helpers/api';
+import JokeForm from './components/JokeForm';
+import Quote from './components/Quote';
+import withGreeting from './hocs/withGreeting';
+import useJoke from './hooks/useJoke';
 import './App.css';
 
 const DEFAULT_STATE = {
-    GREETING: false,
     USER_DATA: {},
-    IS_INITIALIZING: false,
     IS_FORM_OPENING: false
 };
 
 function App() {
-    const [greeting, setGreeting] = useState(DEFAULT_STATE.GREETING);
-    const [isInitializing, setInitializing] = useState(DEFAULT_STATE.IS_INITIALIZING);
+    const [userData, setUserData] = useState(DEFAULT_STATE.USER_DATA);
+    const [isFormOpening, setFormOpening] = useState(DEFAULT_STATE.IS_FORM_OPENING);
+    const {data, isFetching, updateAmount} = useJoke();
 
-    const handleGreeting = async (value) => {
-        setInitializing(!DEFAULT_STATE.IS_INITIALIZING);
-        await ApiHelpers.delay(1500);
-        setGreeting(value);
-        setInitializing(DEFAULT_STATE.IS_INITIALIZING);
+    const onFormSubmit = async ({firstName, lastName, amount}) => {
+        try {
+            await updateAmount(amount);
+            setUserData({firstName, lastName, amount});
+        } catch (error) {
+            notification.error({
+                message: 'Joke is all around you but not this time!'
+            });
+        }
+
+        setFormOpening(DEFAULT_STATE.IS_FORM_OPENING);
     };
 
-    if (!greeting) {
-        return (
-            <Layout>
-                <Container className="main-container greeting">
-                    <Typography.Title>
-                        A joke is waiting for you!
-                    </Typography.Title>
-                    <Button
-                        size="large"
-                        loading={isInitializing}
-                        onClick={() => handleGreeting(!DEFAULT_STATE.GREETING)}>
-                        Start
-                    </Button>
-                </Container>
-            </Layout>
-        );
-    }
+    const onFormCancel = () => setFormOpening(DEFAULT_STATE.IS_FORM_OPENING);
+
+    useEffect(() => {
+        setFormOpening(!DEFAULT_STATE.IS_FORM_OPENING);
+    }, []);
+
+    const name = `${userData.firstName || ''} ${userData.lastName || ''}`.trim();
 
     return (
         <Layout>
-            <Container/>
+            <Container className="main-container">
+                <Typography.Title className="name">
+                    {!!name && `Hi, ${name}`}
+                </Typography.Title>
+                {!isEmpty(data) && (
+                    <Space>
+                        This kind of joke does not fit for you?
+                        <Button
+                            type="primary"
+                            shape="circle"
+                            ghost
+                            icon={<SyncOutlined/>}
+                            onClick={() => setFormOpening(!DEFAULT_STATE.IS_FORM_OPENING)}/>
+                    </Space>
+                )}
+                {map(data, (value, index) => (
+                    <Quote key={value.id || index} text={value.joke}/>
+                ))}
+                {isFormOpening && (
+                    <JokeForm
+                        modalProps={{
+                            okText: 'Confirm',
+                            onOk: onFormSubmit,
+                            onCancel: onFormCancel,
+                            okButtonProps: {
+                                loading: isFetching
+                            },
+                            cancelButtonProps: {
+                                disabled: isFetching
+                            }
+                        }}
+                        formProps={{initialValues: userData}}/>
+                )}
+            </Container>
         </Layout>
     );
 }
 
-export default App;
+export default withGreeting(App);

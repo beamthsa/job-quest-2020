@@ -23,17 +23,114 @@ body {
 
 .ant-layout-content {
     min-height: 100vh;
+    max-height: 100vh;
+    overflow: auto;
 }
 
 .ant-btn {
-    color: var(--secondary-text-color);
     font-weight: 600;
     border-color: var(--primary-text-color);
-    background-color: var(--primary-text-color);
+    color: var(--primary-text-color);
+    background-color: var(--primary-color);
 }
 
 .ant-btn:hover,
 .ant-btn:focus {
     color: var(--primary-text-color);
     border-color: var(--primary-text-color);
+    color: var(--primary-color);
+    background-color: var(--primary-text-color);
+}
+
+.ant-btn:disabled {
+    border-color: var(--primary-text-color);
+    color: var(--primary-text-color);
+    background-color: var(--primary-color);
+    opacity: 0.3;
+}
+
+.ant-btn-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-text-color);
+    background-color: var(--primary-text-color);
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+    color: var(--primary-text-color);
+    background-color: var(--primary-color);
+}
+
+.ant-btn-primary.ant-btn-background-ghost {
+    color: var(--primary-text-color);
+    border-color: var(--primary-text-color);
+}
+
+.ant-btn-primary.ant-btn-background-ghost:hover,
+.ant-btn-primary.ant-btn-background-ghost:focus {
+    color: var(--primary-text-color);
+    border-color: var(--primary-text-color);
+    opacity: 0.7;
+}
+
+.ant-modal-close-x {
+    color: var(--primary-text-color);
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.ant-modal-close-x:hover {
+    opacity: 0.6;
+}
+
+.ant-modal-content {
+    background-color: var(--primary-color);
+}
+
+.ant-modal-footer {
+    border-color: transparent;
+}
+
+.ant-form-item-label {
+    font-weight: bold;
+}
+
+.ant-input,
+.ant-input:hover,
+.ant-input:focus,
+.ant-input-number,
+.ant-input-number:hover,
+.ant-input-number:focus {
+    background: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: var(--primary-text-color);
+}
+
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-number:focus,
+.ant-input-number-focused {
+    box-shadow: none;
+    outline: none;
+}
+
+.ant-form-item-has-error .ant-input,
+.ant-form-item-has-error .ant-input:hover,
+.ant-form-item-has-error .ant-input-number,
+.ant-form-item-has-error .ant-input-number:not([disabled]):hover {
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+}
+
+.ant-form-item-has-error .ant-input:focus {
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    box-shadow: none;
+}
+
+.ant-input-number-handler-wrap {
+    display: none;
 }

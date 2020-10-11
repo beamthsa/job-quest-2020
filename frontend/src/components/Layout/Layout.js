@@ -6,8 +6,8 @@ import './Layout.css';
 
 const {Content} = AntLayout;
 
-const Layout = ({children}) => (
-    <AntLayout className="layout">
+const Layout = ({children, ...props}) => (
+    <AntLayout className="layout" {...props}>
         <Content>{children}</Content>
     </AntLayout>
 );
