@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useCookies} from 'react-cookie';
 import {Button, Typography} from 'antd';
+import {SmileOutlined} from '@ant-design/icons'
 
 import Layout from '../components/Layout'
 import Container from '../components/Container'
@@ -29,14 +30,19 @@ function withGreeting(WrappedComponent) {
                 <Layout>
                     <Container className="main-container greeting">
                         <Typography.Title>
-                            A joke is waiting for you!
+                            A joke is waiting for you
+                        </Typography.Title>
+                        <Typography.Title level={5}>
+                            Let's press a smile button to explore!
                         </Typography.Title>
                         <Button
+                            type="primary"
+                            shape="circle"
                             size="large"
+                            ghost
+                            icon={<SmileOutlined/>}
                             loading={isInitializing}
-                            onClick={() => handleGreeting(!DEFAULT_STATE.GREETING)}>
-                            Start
-                        </Button>
+                            onClick={() => handleGreeting(!DEFAULT_STATE.GREETING)}/>
                     </Container>
                 </Layout>
             );

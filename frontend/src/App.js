@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Typography, Button, Space, notification} from 'antd';
-import {SyncOutlined} from '@ant-design/icons'
+import {SmileOutlined} from '@ant-design/icons'
 import map from 'lodash/map';
 import isEmpty from 'lodash/isEmpty';
 
@@ -49,17 +49,19 @@ function App() {
                 <Typography.Title className="name">
                     {!!name && `Hi, ${name}`}
                 </Typography.Title>
-                {!isEmpty(data) && (
-                    <Space>
-                        This kind of joke does not fit for you?
-                        <Button
-                            type="primary"
-                            shape="circle"
-                            ghost
-                            icon={<SyncOutlined/>}
-                            onClick={() => setFormOpening(!DEFAULT_STATE.IS_FORM_OPENING)}/>
-                    </Space>
-                )}
+                    {!isFormOpening && (
+                        <Space>
+                            {isEmpty(data)
+                                ? 'Get a joke'
+                                : 'This kind of joke does not fit for you?'}
+                            <Button
+                                type="primary"
+                                shape="circle"
+                                ghost
+                                icon={<SmileOutlined/>}
+                                onClick={() => setFormOpening(!DEFAULT_STATE.IS_FORM_OPENING)}/>
+                        </Space>
+                    )}
                 {map(data, (value, index) => (
                     <Quote key={value.id || index} text={value.joke}/>
                 ))}
